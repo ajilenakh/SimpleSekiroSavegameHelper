@@ -245,14 +245,7 @@ namespace SimpleSekiroSavegameHelper
                 MessageBox.Show("Game not running!", "Simple Sekiro Savegame Helper", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return false;
             }
-            int gameIndex = -1;
-            for (int i = 0; i < procList.Length; i++)
-            {
-                if (procList[i].MainWindowTitle != GameData.PROCESS_TITLE || !procList[i].MainModule.FileVersionInfo.FileDescription.Contains(GameData.PROCESS_DESCRIPTION))
-                    continue;
-                gameIndex = i;
-                break;
-            }
+            int gameIndex = 0;
             if (gameIndex < 0)
             {
                 MessageBox.Show("Game not running!", "Simple Sekiro Savegame Helper", MessageBoxButton.OK, MessageBoxImage.Exclamation);
