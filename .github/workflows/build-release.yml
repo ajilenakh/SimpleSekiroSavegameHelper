@@ -23,10 +23,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: SimpleSekiroSavegameHelper-Release
-          path: '**/bin/Release/**/*.exe'
+          path: '**/bin/*/Release/*.exe'
 
       - name: Create GitHub Release (tagged only)
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          files: '**/bin/Release/**/*.exe'
+          files: '**/bin/*/Release/*.exe'
