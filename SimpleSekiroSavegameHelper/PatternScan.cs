@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows;
 
@@ -11,26 +10,20 @@ namespace SimpleSekiroSavegameHelper
         private long dwStart = 0;
         private byte[] bData;
 
-        /// <summary>
-        /// Initialize PatternScanner and read all memory from process.
-        /// </summary>
-        /// <param name="hProcess">Handle to the process in whose memory pattern will be searched for.</param>
-        /// <param name="pModule">Module which will be searched for the pattern.</param>
-        internal PatternScan(IntPtr hProcess, ProcessModule pModule)
+        internal PatternScan(IntPtr hProcess, long baseAddress, int moduleSize)
         {
             if (IntPtr.Size == 4)
-                dwStart = (uint)pModule.BaseAddress;
+                dwStart = (uint)baseAddress;
             else if (IntPtr.Size == 8)
-                dwStart = (long)pModule.BaseAddress;
-            int nSize = pModule.ModuleMemorySize;
-            bData = new byte[nSize];
+                dwStart = baseAddress;
+            bData = new byte[moduleSize];
 
-            if (!ReadProcessMemory(hProcess, dwStart, bData, nSize, out IntPtr lpNumberOfBytesRead))
+            if (!ReadProcessMemory(hProcess, dwStart, bData, moduleSize, out IntPtr lpNumberOfBytesRead))
             {
                 MessageBox.Show("Could not read memory in PatternScan()!", "Simple Sekiro Savegame Helper", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
-            if (lpNumberOfBytesRead.ToInt64() != nSize || bData == null || bData.Length == 0)
+            if (lpNumberOfBytesRead.ToInt64() != moduleSize || bData == null || bData.Length == 0)
             {
                 MessageBox.Show("ReadProcessMemory error in PatternScan()!", "Simple Sekiro Savegame Helper", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;

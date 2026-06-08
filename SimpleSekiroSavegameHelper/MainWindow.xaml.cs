@@ -22,6 +22,8 @@ namespace SimpleSekiroSavegameHelper
 
         internal Process _gameProc;
         internal IntPtr _gameAccessHwnd = IntPtr.Zero;
+        internal long _gameBaseAddress = 0;
+        internal int _gameModuleSize = 0;
         internal long _offset_checksumcheck = 0x0;
         internal long _offset_savefilecheck = 0x0;
         internal long _offset_saveslotcheck = 0x0;
@@ -253,17 +255,22 @@ namespace SimpleSekiroSavegameHelper
             }
             _gameProc = procList[gameIndex];
             _gameAccessHwnd = OpenProcess(PROCESS_ALL_ACCESS, false, (uint)procList[gameIndex].Id);
-            if (_gameAccessHwnd == IntPtr.Zero || _gameProc.MainModule.BaseAddress == IntPtr.Zero)
+            if (_gameAccessHwnd == IntPtr.Zero)
             {
                 MessageBox.Show("No access to game!", "Simple Sekiro Savegame Helper", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                if (_gameAccessHwnd != IntPtr.Zero)
-                {
-                    CloseHandle(_gameAccessHwnd);
-                    _gameAccessHwnd = IntPtr.Zero;
-                }
                 return false;
             }
-            // Version check skipped — relies on process existence only
+
+            try
+            {
+                _gameBaseAddress = (long)_gameProc.MainModule.BaseAddress;
+                _gameModuleSize = _gameProc.MainModule.ModuleMemorySize;
+            }
+            catch
+            {
+                _gameBaseAddress = 0;
+                _gameModuleSize = 0;
+            }
 
             return true;
         }
@@ -279,7 +286,13 @@ namespace SimpleSekiroSavegameHelper
             if (_offset_savefilecheck != 0x0 && _offset_saveslotcheck != 0x0 && _offset_checksumcheck != 0x0)
                 return true;
 
-            PatternScan patternScan = new PatternScan(_gameAccessHwnd, _gameProc.MainModule);
+            if (_gameBaseAddress == 0 || _gameModuleSize == 0)
+            {
+                MessageBox.Show("Could not resolve game module memory layout!", "Simple Sekiro Savegame Helper", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return false;
+            }
+
+            PatternScan patternScan = new PatternScan(_gameAccessHwnd, _gameBaseAddress, _gameModuleSize);
 
             _offset_checksumcheck = patternScan.FindPattern(GameData.PATTERN_CHECKSUMCHECK) + GameData.PATTERN_CHECKSUMCHECK_OFFSET;
             Debug.WriteLine("checksum check check found at: 0x" + _offset_checksumcheck.ToString("X"));
