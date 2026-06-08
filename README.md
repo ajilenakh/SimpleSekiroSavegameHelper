@@ -9,17 +9,19 @@ A small utility for save game management for [Sekiro: Shadows Die Twice](https:/
 [Get the latest release here](https://github.com/uberhalit/SimpleSekiroSavegameHelper/releases)  
 [Get the latest fork release here](https://github.com/ajilenakh/SimpleSekiroSavegameHelper/releases)
 
+Running on Linux? See [PROTON.md](PROTON.md).
+
 ## Features
 
-* automatically determines latest savegame on startup
-* Patch game to skip checksum and SteamID checks on load, this will enable you to load modified save games **(RAM patches only)**
-* (Import foreign savegame) imports a save game from a different steam account into yours, your game settings can be preserved if a destination is given
-* (Backup savegame) backup current savegame
-* (Set name for selected backup) set a custom name for a backup
-* (Revert to selected backup) deletes current savegame and places selected backup as new one
-* (Delete selected backup) deletes selected backup form disk
-* optionally hotkey shortcuts for all features
-* manually select another savegame path to lock/backup
+- automatically determines latest savegame on startup
+- Patch game to skip checksum and SteamID checks on load, this will enable you to load modified save games **(RAM patches only)**
+- (Import foreign savegame) imports a save game from a different steam account into yours, your game settings can be preserved if a destination is given
+- (Backup savegame) backup current savegame
+- (Set name for selected backup) set a custom name for a backup
+- (Revert to selected backup) deletes current savegame and places selected backup as new one
+- (Delete selected backup) deletes selected backup form disk
+- optionally hotkey shortcuts for all features
+- manually select another savegame path to lock/backup
 
 ## Usage
 
@@ -35,8 +37,8 @@ This function takes a source file and optionally a destination file. The save sl
 
 ## Prerequisites
 
-* .NET Framework 4.5
-* administrative privileges (for patching and to overwrite files)
+- .NET Framework 4.5
+- administrative privileges (for patching and to overwrite files)
 
 ## Building
 
@@ -52,20 +54,23 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Credits
 
-* [klm123](https://gaming.stackexchange.com/users/49789/klm123) for some save file offsets
-* [Darius Dan](http://www.dariusdan.com) for the icon
+- [klm123](https://gaming.stackexchange.com/users/49789/klm123) for some save file offsets
+- [Darius Dan](http://www.dariusdan.com) for the icon
 
 ## Version History
 
-* v2.0.0.0 (2019-05-01)
-  * Added feature to patch game so it will accept any save file
-  * Added save file importer
-  * Checkbox states will be saved now
-  * Small fixes
-* v1.1.0.0 (2019-04-16)
-  * Added feature to give a name to backups
-  * Added feature to delete backups
-  * Hotkeys are toggleable now
-  * Removed lock/unlock feature as they could crash the game
-* v1.0.0.0 (2019-03-23)
-  * Initial release
+- v2.1.0.0 (fork — ajilenakh)
+  - Proton/Linux compatibility fixes
+  - Build fixes (.NET 4.8, x64 platform)
+- v2.0.0.0 (2019-05-01)
+  - Added feature to patch game so it will accept any save file
+  - Added save file importer
+  - Checkbox states will be saved now
+  - Small fixes
+- v1.1.0.0 (2019-04-16)
+  - Added feature to give a name to backups
+  - Added feature to delete backups
+  - Hotkeys are toggleable now
+  - Removed lock/unlock feature as they could crash the game
+- v1.0.0.0 (2019-03-23)
+  - Initial release
