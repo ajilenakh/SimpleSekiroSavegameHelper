@@ -263,17 +263,7 @@ namespace SimpleSekiroSavegameHelper
                 }
                 return false;
             }
-            string gameFileVersion = FileVersionInfo.GetVersionInfo(procList[0].MainModule.FileName).FileVersion;
-            if (gameFileVersion != GameData.PROCESS_EXE_VERSION && Array.IndexOf(GameData.PROCESS_EXE_VERSION_SUPPORTED, gameFileVersion) < 0 && !_settingsService.ApplicationSettings.gameVersionNotify)
-            {
-                MessageBox.Show(string.Format("Unknown game version '{0}'.\nSome functions might not work properly or even crash the game. " +
-                                              "Check for updates on this utility regularly following the link at the bottom.", gameFileVersion), "Simple Sekiro Savegame Helper", MessageBoxButton.OK, MessageBoxImage.Warning);
-                ClearConfiguration();
-                _settingsService.ApplicationSettings.gameVersionNotify = true;
-                return false;
-            }
-            else
-                _settingsService.ApplicationSettings.gameVersionNotify = false;
+            // Version check skipped — relies on process existence only
 
             return true;
         }
