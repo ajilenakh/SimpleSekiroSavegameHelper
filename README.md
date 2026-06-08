@@ -6,7 +6,8 @@ A small utility for save game management for [Sekiro: Shadows Die Twice](https:/
 
 ## Download
 
-[Get the latest release here](https://github.com/uberhalit/SimpleSekiroSavegameHelper/releases)
+[Get the latest release here](https://github.com/uberhalit/SimpleSekiroSavegameHelper/releases)  
+[Get the latest fork release here](https://github.com/ajilenakh/SimpleSekiroSavegameHelper/releases)
 
 ## Features
 
